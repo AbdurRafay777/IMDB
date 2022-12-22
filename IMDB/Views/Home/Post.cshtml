@@ -1,0 +1,103 @@
+﻿@{
+    Session["CurrentMovie"] = null;
+}
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Century Gothic;
+    }
+
+    header {
+        background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../Content/2.jpg);
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .main {
+        max-width: 1300px;
+        margin: auto;
+    }
+
+
+    .title {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+        .title h1 {
+            color: #e74c3c;
+            font-size: 40px;
+            font-family: Corbel;
+        }
+
+    .subtitle {
+        position: absolute;
+        top: 17%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        color: #e74c3c;
+        font-family: Corbel;
+    }
+
+    form {
+        display: inline-block;
+    }
+
+    label {
+        font-weight: bold;
+        color: #e84118;
+    }
+
+    button {
+        /* default for <button>, but useful for <a> */
+        display: inline;
+        text-align: center;
+        text-decoration: none;
+        /* create a small space when buttons wrap on 2 lines */
+        margin: 2px 0;
+        /* invisible border (will be colored on hover/focus) */
+        border: solid 1px #fff;
+        border-radius: 0px;
+        /* size comes from text & padding (no width/height) */
+        padding: 1em 8em;
+        /* make sure colors have enough contrast! */
+        color: white;
+        background-color: transparent;
+        transition: 0.6s ease;
+    }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #e74c3c;
+        }
+</style>
+
+<html>
+<body>
+    <header>
+        <div class="title">
+            <h1>@ViewBag.Title</h1>
+        </div>
+
+        <form method="post" action="../Home/UserLogin">
+            <div style="margin-top: 150px;">
+                <button style="margin:5px; margin-top: 10px;">Proceed to Login</button>
+            </div>
+        </form>
+
+        <form method="post" action="../Home/Index">
+            <button style="margin:5px; margin-top: 10px;">Go to HomePage</button>
+        </form>
+    </header>
+</body>
+</html>

@@ -1,0 +1,256 @@
+﻿@using IMDB.Models
+<!DOCTYPE html>
+
+<head>
+    <title>Complete Form Solution</title>
+</head>
+
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Century Gothic;
+    }
+
+    header {
+        background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../Content/2.jpg);
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .main {
+        max-width: 1300px;
+        margin: auto;
+    }
+
+
+    .title {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+        .title h1 {
+            color: #e74c3c;
+            font-size: 40px;
+            font-family: Corbel;
+        }
+
+    .subtitle {
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        color: #e74c3c;
+        font-family: Corbel;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+    }
+
+        /* Style the submit button */
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    /* Style the container for inputs */
+    .container {
+        background-color: #f1f1f1;
+        padding: 20px;
+    }
+
+    /* The message box is shown when the user clicks on the password field */
+    #message {
+        display: none;
+        background: #f1f1f1;
+        color: #000;
+        position: relative;
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+        #message p {
+            padding: 10px 35px;
+            font-size: 18px;
+        }
+
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+        color: green;
+    }
+
+        .valid:before {
+            position: relative;
+            left: -35px;
+            content: "✔";
+        }
+
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+        color: red;
+    }
+
+        .invalid:before {
+            position: relative;
+            left: -35px;
+            content: "✖";
+        }
+
+    form {
+        display: inline-block;
+    }
+
+    label {
+        font-weight: bold;
+        color: #e84118;
+    }
+
+    button {
+        /* default for <button>, but useful for <a> */
+        display: inline;
+        text-align: center;
+        text-decoration: none;
+        /* create a small space when buttons wrap on 2 lines */
+        margin: 2px 0;
+        /* invisible border (will be colored on hover/focus) */
+        border: solid 1px #fff;
+        border-radius: 0px;
+        /* size comes from text & padding (no width/height) */
+        padding: 1em 8em;
+        /* make sure colors have enough contrast! */
+        color: white;
+        background-color: transparent;
+        transition: 0.6s ease;
+    }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #e74c3c;
+        }
+</style>
+
+<html>
+<body>
+    <header>
+        <div class="title">
+            <h1>IMDB</h1>
+        </div>
+        <div class="subtitle">
+            <h1>SIGN UP</h1>
+        </div>
+        <div>
+            <form method="post" action="../Home/Post">
+                <div style="margin-top: 150px;">
+                    <label for="userName">User Name</label>
+                    <input type="text" name="userName" id="first-name" placeholder="John" required />
+                    <br>
+                </div>
+
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required placeholder="JohnSmith789@gmail.com">
+                    <br>
+
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="psw" pattern=".{8,50}" placeholder="your password" required title="8 to 50 characters">
+                    <br>
+                </div>
+
+                <div>
+                    <label for="DOB">Date of Birth</label>
+                    <input type="date" name="DOB" id="DOB" required placeholder="04/04/2004">
+                    <br>
+                </div>
+
+                <div>
+                    <button style="margin-top: 10px;">Create Account</button>
+                    <br>
+                </div>
+            </form>
+            <div id="message">
+                <h3>Password must contain the following:</h3>
+                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                <p id="number" class="invalid">A <b>number</b></p>
+                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+            </div>
+        </div>
+
+        <script>
+            var myInput = document.getElementById("psw");
+            var letter = document.getElementById("letter");
+            var capital = document.getElementById("capital");
+            var number = document.getElementById("number");
+            var length = document.getElementById("length");
+
+            // When the user clicks on the password field, show the message box
+            myInput.onfocus = function () {
+                document.getElementById("message").style.display = "block";
+            }
+
+            // When the user clicks outside of the password field, hide the message box
+            myInput.onblur = function () {
+                document.getElementById("message").style.display = "none";
+            }
+
+            // When the user starts to type something inside the password field
+            myInput.onkeyup = function () {
+                // Validate lowercase letters
+                var lowerCaseLetters = /[a-z]/g;
+                if (myInput.value.match(lowerCaseLetters)) {
+                    letter.classList.remove("invalid");
+                    letter.classList.add("valid");
+                } else {
+                    letter.classList.remove("valid");
+                    letter.classList.add("invalid");
+                }
+
+                // Validate capital letters
+                var upperCaseLetters = /[A-Z]/g;
+                if (myInput.value.match(upperCaseLetters)) {
+                    capital.classList.remove("invalid");
+                    capital.classList.add("valid");
+                } else {
+                    capital.classList.remove("valid");
+                    capital.classList.add("invalid");
+                }
+
+                // Validate numbers
+                var numbers = /[0-9]/g;
+                if (myInput.value.match(numbers)) {
+                    number.classList.remove("invalid");
+                    number.classList.add("valid");
+                } else {
+                    number.classList.remove("valid");
+                    number.classList.add("invalid");
+                }
+
+                // Validate length
+                if (myInput.value.length >= 8) {
+                    length.classList.remove("invalid");
+                    length.classList.add("valid");
+                } else {
+                    length.classList.remove("valid");
+                    length.classList.add("invalid");
+                }
+            }
+        </script>
+    </header>
+</body>
+</html>

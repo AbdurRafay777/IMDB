@@ -1,0 +1,292 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@{
+    Layout = null;
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    if ((int)Session["isAdmin"] == 1)
+    {
+        Response.Redirect("~/Admin/Index");
+    }
+}
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Century Gothic;
+    }
+
+    header {
+        background-image: url('../../Content/2.jpg');
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #e84118;
+    }
+
+    .title {
+    }
+
+        .title h1 {
+            color: #e74c3c;
+            font-size: 40px;
+            font-family: Corbel;
+            text-align: center;
+        }
+
+    button {
+        float: right;
+        /* default for <button>, but useful for <a> */
+        display: inline;
+        text-align: center;
+        text-decoration: none;
+        /* create a small space when buttons wrap on 2 lines */
+        margin: 2px 0;
+        /* invisible border (will be colored on hover/focus) */
+        border: solid 1px #fff;
+        border-radius: 0px;
+        /* size comes from text & padding (no width/height) */
+        padding: 0.5em 3em;
+        /* make sure colors have enough contrast! */
+        color: white;
+        background-color: transparent;
+        transition: 0.6s ease;
+    }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #e74c3c;
+        }
+
+    div {
+        text-align: center;
+    }
+
+    #fb {
+        width: 100%;
+        height: 30px;
+    }
+
+    #input_box {
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    input {
+        width: 20%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+    }
+
+        /* Style the submit button */
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    /* Style the container for inputs */
+    .container {
+        background-color: #f1f1f1;
+        padding: 20px;
+    }
+
+    /* The message box is shown when the user clicks on the password field */
+    #message {
+        display: none;
+        background: #f1f1f1;
+        color: #000;
+        position: relative;
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+        #message p {
+            padding: 10px 35px;
+            font-size: 18px;
+        }
+
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+        color: green;
+    }
+
+        .valid:before {
+            position: relative;
+            left: -35px;
+            content: "✔";
+        }
+
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+        color: red;
+    }
+
+        .invalid:before {
+            position: relative;
+            left: -35px;
+            content: "✖";
+        }
+
+    .HomeButton {
+        float: right;
+        /* default for <button>, but useful for <a> */
+        display: inline;
+        text-align: center;
+        text-decoration: none;
+        /* create a small space when buttons wrap on 2 lines */
+        margin: 2px 0;
+        /* invisible border (will be colored on hover/focus) */
+        border: solid 1px #fff;
+        border-radius: 0px;
+        /* size comes from text & padding (no width/height) */
+        padding: 0.5em 3em;
+        /* make sure colors have enough contrast! */
+        color: white;
+        background-color: transparent;
+        transition: 0.6s ease;
+        width: 150px;
+        height: 50px;
+        font-size: 14px;
+    }
+
+        .HomeButton:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #e74c3c;
+        }
+</style>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <header>
+        <br />
+        <br />
+        <div class="title">
+            <h1>Profile</h1>
+        </div>
+
+        <form action="../../Home/Index">
+            <button style="margin:5px; margin-top: 30px; position:absolute; left:85%; top: 0%; width:200px; height:50px">Home</button>
+        </form>
+
+        <div style="color:white; font-weight:bold">Email:</div>
+        <div style="color:white">@Session["userEmail"].ToString()</div>
+        <br />
+        <div style="font-weight:bold; color:white;">Username:</div>
+        <div style="color:white;">@Session["userName"].ToString()</div>
+        <br />
+        <div style="font-weight:bold; color:white;">New Username</div>
+
+
+        <form action="../../User/ChangeUserName">
+            <div style="text-align:center;">
+                <label for="input_box"></label><input type="text" id="input_box" name="userName" placeholder="John Smith" />
+                <button style="position:absolute; left:45%; top:37%; width:150px">Save</button>
+            </div>
+        </form>
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <div style="font-weight:bold; color:white;">New Password</div>
+        <form action="../../User/ChangePassword">
+            <div style="text-align:center;">
+                <label for="input_box1"></label><input type="Password" id="psw" name="password" placeholder="********" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
+                <button style="position:absolute; left:45%; top:56%; width:150px">Save</button>
+            </div>
+        </form>
+
+        <div id="message">
+            <h3>Password must contain the following:</h3>
+            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+            <p id="number" class="invalid">A <b>number</b></p>
+            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+        </div>
+
+        <script>
+            var myInput = document.getElementById("psw");
+            var letter = document.getElementById("letter");
+            var capital = document.getElementById("capital");
+            var number = document.getElementById("number");
+            var length = document.getElementById("length");
+
+            // When the user clicks on the password field, show the message box
+            myInput.onfocus = function () {
+                document.getElementById("message").style.display = "block";
+            }
+
+            // When the user clicks outside of the password field, hide the message box
+            myInput.onblur = function () {
+                document.getElementById("message").style.display = "none";
+            }
+
+            // When the user starts to type something inside the password field
+            myInput.onkeyup = function () {
+                // Validate lowercase letters
+                var lowerCaseLetters = /[a-z]/g;
+                if (myInput.value.match(lowerCaseLetters)) {
+                    letter.classList.remove("invalid");
+                    letter.classList.add("valid");
+                } else {
+                    letter.classList.remove("valid");
+                    letter.classList.add("invalid");
+                }
+
+                // Validate capital letters
+                var upperCaseLetters = /[A-Z]/g;
+                if (myInput.value.match(upperCaseLetters)) {
+                    capital.classList.remove("invalid");
+                    capital.classList.add("valid");
+                } else {
+                    capital.classList.remove("valid");
+                    capital.classList.add("invalid");
+                }
+
+                // Validate numbers
+                var numbers = /[0-9]/g;
+                if (myInput.value.match(numbers)) {
+                    number.classList.remove("invalid");
+                    number.classList.add("valid");
+                } else {
+                    number.classList.remove("valid");
+                    number.classList.add("invalid");
+                }
+
+                // Validate length
+                if (myInput.value.length >= 8) {
+                    length.classList.remove("invalid");
+                    length.classList.add("valid");
+                } else {
+                    length.classList.remove("valid");
+                    length.classList.add("invalid");
+                }
+            }
+
+            function func1(id) {
+                var x = document.getElementById(id);
+                x.removeChild(x.childNodes[0]);
+                x.removeChild(x.childNodes[0]);
+            }
+        </script>
+
+        <br />
+        <br />
+        <br />
+        <br />
+    </header>
+</body>
+</html>\

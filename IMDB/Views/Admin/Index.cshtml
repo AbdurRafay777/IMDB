@@ -1,0 +1,246 @@
+﻿@using System.Data.SqlClient;
+@using System.Data.Sql;
+@using System.Data;
+@{
+
+    ViewBag.Title = "Admin";
+    if ((int)Session["isAdmin"] != 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+
+    DataTable dt_Movies = IMDB.Models.CRUD.GetMovieList();
+    DataTable dt_Users = IMDB.Models.CRUD.GetUserList();
+}
+
+<style type="text/css">
+    h1 {
+        text-align: center;
+    }
+
+    .imp {
+        font-weight: bold;
+    }
+
+    div.hidden {
+        display: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Century Gothic;
+    }
+
+    header {
+        background-image: url('../../Content/3.jpg');
+        height: 100vh;
+        background-size: cover;
+        background-attachment: fixed;
+        width: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #e84118;
+    }
+
+    .title {
+    }
+
+        .title h1 {
+            color: #e74c3c;
+            font-size: 40px;
+            font-family: Corbel;
+            text-align: center;
+        }
+
+    button {
+        text-align: center;
+        text-decoration: none;
+        margin: 2px 0;
+        border: solid 1px #fff;
+        border-radius: 0px;
+        color: white;
+        background-color: transparent;
+        transition: 0.6s ease;
+        padding: 15px 32px;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: 200px;
+        height: 50px;
+    }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #e74c3c;
+        }
+
+    .myTable {
+        width: 100%;
+        text-align: left;
+        background-color: black;
+        border-collapse: collapse;
+        color: white;
+    }
+
+        .myTable th {
+            background-color: black;
+            color: white;
+        }
+
+        .myTable td,
+        .myTable th {
+            padding: 10px;
+            border: 1px solid #fff;
+        }
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+</head>
+
+<body>
+    <header>
+
+        <br />
+        <br />
+        <script>
+
+            function func1() {
+                var x = document.getElementById("div1");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+            function func2() {
+                var x = document.getElementById("div2");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+            function func3() {
+                var x = document.getElementById("div3");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+            function func4() {
+                var x = document.getElementById("div4");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+            $(document).ready(function () {
+                $("div#div1").removeClass("hidden");
+            });
+
+            $(document).ready(function () {
+                $("div#div2").removeClass("hidden");
+            });
+
+            $(document).ready(function () {
+                $("div#div3").removeClass("hidden");
+            });
+
+            $(document).ready(function () {
+                $("div#div4").removeClass("hidden");
+            });
+        </script>
+
+
+        <h1 style="color:white">Administrator</h1>
+
+        <form action="../../Home/Index">
+            <button style="position:absolute;left:13.5%">Home</button>
+        </form>
+        <button onclick="func1()" style="position:absolute;left:28.5%;">
+            View Movie List
+        </button>
+        <button onclick="func2()" style="position:absolute;left:43.5%;">
+            View Feedback
+        </button>
+        <button onclick="func3()" style="position:absolute;left:58.5%;">
+            Add Movie
+        </button>
+        <button onclick="func4()" style="position:absolute;left:73.5%;">
+            View User List
+        </button>
+
+
+        <div id="div1" class="hidden">
+            <br />
+            <br />
+            <br />
+            <br />
+            <div>Movies List</div>
+            <div>
+                @Html.Raw(IMDB.Models.CRUD.ConvertDataTableToHTML(dt_Movies));
+            </div>
+            <br />
+        </div>
+
+        <div id="div4" class="hidden">
+            <br />
+            <br />
+            <br />
+            <br />
+            <div>User List</div>
+            <div>
+                @Html.Raw(IMDB.Models.CRUD.ConvertDataTableToHTML(dt_Users));
+            </div>
+            <br />
+        </div>
+        <div id="div3" class="hidden">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div style="font-weight: bold; color:white">Add movie to database</div>
+            <form method="post" action="../../Movie/AddMovieToDB">
+                <br>
+                <div style="font-weight: bold; color:white">
+                    Name : <input type="text" name="movieName" required style="width: 30%">
+                    <br>
+                    <br>
+                    Release Date : <input type="Date" name="releaseDate" required style="width: 30%">
+                    <br>
+                    <br>
+                    Rating : <input type="text" name="rating" required style="width: 30%">
+                    <br>
+                    <br>
+                    Description : <input type="text" name="description" required style="width: 75%; height: 40px">
+                    <br>
+                    <br>
+                    Poster link : <input type="text" name="posterLink" required style="width: 75%">
+                    <br>
+                    <br>
+                    Trailer link : <input type="text" name="trailerLink" required style="width: 75%">
+                    <br>
+                    <br>
+                    <button>Submit</button>
+                </div>
+            </form>
+        </div>
+    </header>
+</body>
+</html>

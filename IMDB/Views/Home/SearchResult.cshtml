@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "SearchResult";
+    Session["CurrentMovie"] = null;
+}
+@using IMDB.Models
+@using System.Data;
+
+@model System.Data.DataSet
+<style type="text/css">
+    h1 {
+        text-align: center;
+    }
+
+    .imp {
+        font-weight: bold;
+    }
+
+    div.hidden {
+        display: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Century Gothic;
+    }
+
+    header {
+        background-image: url('../../Content/3.jpg');
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #e84118;
+    }
+
+    .title {
+    }
+
+        .title h1 {
+            color: #e74c3c;
+            font-size: 40px;
+            font-family: Corbel;
+            text-align: center;
+        }
+
+    button {
+        text-align: center;
+        text-decoration: none;
+        margin: 2px 0;
+        border: solid 1px #fff;
+        border-radius: 0px;
+        color: white;
+        background-color: transparent;
+        transition: 0.6s ease;
+        padding: 15px 32px;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #e74c3c;
+        }
+
+    .myTable {
+        width: 100%;
+        text-align: left;
+        background-color: black;
+        border-collapse: collapse;
+        color: white;
+    }
+
+        .myTable th {
+            background-color: black;
+            color: white;
+        }
+
+        .myTable td,
+        .myTable th {
+            padding: 10px;
+            border: 1px solid #fff;
+        }
+
+    .HomeButton {
+        float: left;
+        /* default for <button>, but useful for <a> */
+        display: inline;
+        text-align: center;
+        text-decoration: none;
+        /* create a small space when buttons wrap on 2 lines */
+        margin: 2px 0;
+        /* invisible border (will be colored on hover/focus) */
+        border: solid 1px #fff;
+        border-radius: 0px;
+        /* size comes from text & padding (no width/height) */
+        padding: 0.5em 3em;
+        /* make sure colors have enough contrast! */
+        color: white;
+        background-color: transparent;
+        transition: 0.6s ease;
+        width: 200px;
+        height: 50px;
+        font-size: 14px;
+    }
+
+        .HomeButton:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #e74c3c;
+        }
+</style>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <header>
+        <form action="../../Home/Index">
+            <button style="margin:5px; margin-top: 30px;" class="HomeButton">Home</button>
+        </form>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <table style="position:absolute; left:5%">
+            @foreach (DataRow row in Model.Tables[0].Rows)
+            {
+                <a href="../../Movie/SearchMovie?movieName=@row["movieName"]" style="color:white; font-size:20px"><tr>@row["movieName"]</tr></a>
+
+                <br>
+            }
+        </table>
+    </header>
+</body>
+</html>

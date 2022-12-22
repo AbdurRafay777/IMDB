@@ -1,0 +1,168 @@
+﻿@using IMDB.Models
+@{//If user already logged in
+    Layout = null;
+    if (Session["userID"] != null)
+    {
+        Response.Redirect("~/Home/Authenticate");
+    }
+    Session["CurrentMovie"] = null;
+    Session["Watched"] = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>IMDB</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Century Gothic;
+        }
+
+        header {
+            background-image: url(../Content/2.jpg);
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #e84118;
+        }
+
+        .search-box {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ecf0f1;
+            height: 40px;
+            border-radius: 40px;
+            padding: 10px;
+        }
+
+        .search-btn {
+            color: #e84118;
+            float: right;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ecf0f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-txt {
+            border: none;
+            background: none;
+            outline: none;
+            float: left;
+            color: black;
+            font-size: 16px;
+            transition: 0.4s;
+            line-height: 40px;
+            width: 400px;
+            padding: 0 6px;
+        }
+
+        .main {
+            max-width: 1300px;
+            margin: auto;
+        }
+
+
+        .title {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+            .title h1 {
+                color: #e74c3c;
+                font-size: 70px;
+                font-family: Corbel;
+            }
+
+        button {
+            float: right;
+            /* default for <button>, but useful for <a> */
+            display: inline;
+            text-align: center;
+            text-decoration: none;
+            /* create a small space when buttons wrap on 2 lines */
+            margin: 2px 0;
+            /* invisible border (will be colored on hover/focus) */
+            border: solid 1px #fff;
+            border-radius: 0px;
+            /* size comes from text & padding (no width/height) */
+            padding: 0.5em 3em;
+            /* make sure colors have enough contrast! */
+            color: white;
+            background-color: transparent;
+            transition: 0.6s ease;
+        }
+
+            button:hover {
+                background-color: rgba(255, 255, 255, 0.12);
+                color: #e74c3c;
+            }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+        .divider {
+            width: 5px;
+            height: auto;
+            display: inline-block;
+        }
+    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="main">
+            <div>
+                <form action="../Home/SignUp">
+                    <button style="margin:5px; margin-top: 30px;">Sign Up</button>
+                </form>
+
+                <form action="../Home/UserLogin">
+                    <button style="margin:5px; margin-top: 30px;">Sign In</button>
+                </form>
+
+                <form action="../Home/Index">
+                    <button style="margin:5px; margin-top: 30px;">Home</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="title">
+            <h1>IMDB</h1>
+            <br />
+        </div>
+
+        <form method="post" action="../Home/SearchResult">
+            <div class="search-box">
+                <input class="search-txt" type="text" name="movieName" placeholder="Type to search">
+                <a class="search-btn" href="#">
+
+                    <i class="fas fa-search"></i>
+                </a>
+            </div>
+        </form>
+    </header>
+</body>
+
+
+</html>
